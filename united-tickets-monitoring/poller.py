@@ -11,14 +11,15 @@ from reddit_api import RedditAPI
 
 
 class Poller:
-    LOGFILE_PATH = os.path.join(ROOT_DIR, 'logs', 'poller.log').replace("\\", "/")
-    os.makedirs(os.path.dirname(LOGFILE_PATH), exist_ok=True)
-    logging.config.fileConfig(LOGGER_CONFIG_PATH,
-                              defaults={'logfilename': LOGFILE_PATH},
-                              disable_existing_loggers=False)
 
     def __init__(self):
         load_dotenv()
+
+        logfile_path = os.path.join(ROOT_DIR, 'logs', 'poller.log').replace("\\", "/")
+        os.makedirs(os.path.dirname(logfile_path), exist_ok=True)
+        logging.config.fileConfig(LOGGER_CONFIG_PATH,
+                                  defaults={'logfilename': logfile_path},
+                                  disable_existing_loggers=False)
 
         self.database = Database()
         self.logger = logging.getLogger()
