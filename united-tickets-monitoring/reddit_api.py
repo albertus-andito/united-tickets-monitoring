@@ -10,7 +10,7 @@ class RedditAPI:
 
     def __init__(self, client_id: str, client_secret: str, user_agent: str, database: Database,
                  subreddits: list = None,
-                 query: str = "ticket OR tickets"):
+                 query: str = 'ticket'):
         if subreddits is None:
             subreddits = ["reddevils", "ManchesterUnited"]
         self.reddit = praw.Reddit(
@@ -24,9 +24,16 @@ class RedditAPI:
 
         self.logger = logging.getLogger()
 
-    def search(self, time_filter="day"):
-        for submission in self.reddit.subreddit(self.subreddits).search(query=self.query, sort="new",
-                                                                        time_filter=time_filter):
+    def search(self, mode='search', time_filter='day', limit=100):
+        if mode == 'search':
+            submissions = self.reddit.subreddit(self.subreddits).search(query=self.query, sort="new",
+                                                                        syntax='lucene', time_filter=time_filter)
+        else:
+            submissions = self.reddit.subreddit(self.subreddits).new(limit=limit)
+            submissions = [submission for submission in submissions
+                           if self.query.casefold() in submission.title.casefold() or
+                           self.query.casefold() in submission.selftext.casefold()]
+        for submission in submissions:
             try:
                 if self.database.find_submission(submission.url) is None:
                     self.database.insert_submission(submission.title, submission.selftext, 'Reddit',

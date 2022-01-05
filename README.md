@@ -12,7 +12,12 @@ about tickets sale, thus minimise the chance of me to get the tickets myself.
 
 ## Future improvements
 - Integrate Twitter
+- Extract team we are playing against
 - Extract price from text, and whether it is face value or not (NLP models can be used, but might be overkill)
+- Extract stand and/or seats from text
+- Extract quantity of tickets
+- Notify if the ticket is sold
+- Add mechanism to automatically contact seller (or by clicking on email)
 - Make this as a web service (unlikely, see above)
 
 ## Requirements
