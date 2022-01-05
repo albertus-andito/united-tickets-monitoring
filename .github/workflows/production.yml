@@ -21,4 +21,4 @@ jobs:
           host: 18.168.179.48
           key: ${{ secrets.DEPLOY_KEY }}
           username: ubuntu
-          script: cd ~/repos/united-tickets-monitoring;git fetch --all; git reset --hard origin/master; source ./united-tickets-monitoring-venv/bin/activate; pip install -r ./requirements.txt; deactivate; pkill -f poller.py; pkill -f database_watcher.py; ./run.sh 
+          script: cd ~/repos/united-tickets-monitoring;git fetch --all; git reset --hard origin/master; source ./united-tickets-monitoring-venv/bin/activate; pip install -r ./requirements.txt; deactivate; ps -ef | grep 'poller.py' | grep -v grep | awk '{print $2}' | xargs -r kill -9; ps -ef | grep 'database_watcher.py' | grep -v grep | awk '{print $2}' | xargs -r kill -9; ./run.sh 
