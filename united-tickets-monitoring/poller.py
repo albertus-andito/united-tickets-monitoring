@@ -28,7 +28,7 @@ class Poller:
         self.logger.info('Starting poller...')
         reddit = RedditAPI(os.getenv('REDDIT_CLIENT_ID'), os.getenv('REDDIT_CLIENT_SECRET'),
                            os.getenv('REDDIT_USER_AGENT'), self.database)
-        reddit.search()
+        reddit.search(mode='new')
         schedule.every().minute.do(reddit.search)
 
         while True:
