@@ -16,9 +16,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Deploy to production
-        uses: appleboy/ssh-action@v0.1.4
+        uses: appleboy/ssh-action@master
         with:
-          host: 18.168.179.48
+          host: 172.26.8.211
           key: ${{ secrets.DEPLOY_KEY }}
           username: ubuntu
           script: cd ~/repos/united-tickets-monitoring;git fetch --all; git reset --hard origin/master; source ./united-tickets-monitoring-venv/bin/activate; pip install -r ./requirements.txt; deactivate; pkill -f poller.py; pkill -f database_watcher.py; ./run.sh 
